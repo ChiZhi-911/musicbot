@@ -101,26 +101,38 @@
         const inputField = document.getElementById('musicInput');
         const playButton = document.getElementById('playBtn');
         const playerFrame = document.getElementById('ytPlayer');
+        const songs = {
+    "菸癮": "PIWXhAvy7uU",
+    "走建國路回家但後座少ㄌ泥": "edhd3aZotjQ",
+    "閣愛妳一擺": "PJJhHihvDpo",
+    "Not Playing": "PBgndpNStbcc",
+    "愛妳是": "aMVYd6LHS6Y",
+    "我不是饒舌歌手": "lR6zkQln6Ew", 
+    "擋一根": "3_GFxZ9xA7o",
+    "Like Him": "dgUHE8wWhiE",
+    "手卷烟": "hXshPlzlfv0",
+    "luther": "XVveECQmiAk",
+    "太陽與地球": "/i5YRIjxyJP8",
+    "drunk": "4HLumkaPcCI"
+};
         function playMusic() {
-            const keyword = inputField.value;
+    const keyword = inputField.value.trim();
 
-            if (keyword.trim() === "") {
-                alert("請先輸入歌名喔！");
-                return;
-            }
+    if (keyword === "") {
+        alert("請先輸入歌名喔！");
+        return;
+    }
 
-            const newUrl = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(keyword)}&autoplay=1&mute=1`;
+    const videoId = songs[keyword];
+    if (!videoId) {
+        alert("目前只支援：稻香、告白氣球、好想你 這幾首喔～");
+        return;
+    }
 
-            playerFrame.src = newUrl;
-        }
+    const newUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+    playerFrame.src = newUrl;
+}
 
-        playButton.addEventListener('click', playMusic);
-
-        inputField.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                playMusic();
-            }
-        });
 
     </script>
 </body>

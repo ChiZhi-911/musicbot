@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音樂機器人</title>
+    <title>我的迷你 DJ 機器人</title>
     <style>
         body {
-            font-family: '標楷體', sans-serif;
+            font-family: '微軟正黑體', sans-serif;
             background-color: #393838;
             color: white;
             display: flex;
@@ -56,7 +56,6 @@
         }
         button:hover { background-color: #cc0000; }
 
-       
         .player-container {
             position: relative;
             padding-bottom: 56.25%;
@@ -64,6 +63,7 @@
             overflow: hidden;
             border-radius: 10px;
             border: 2px solid #444;
+            background: #111;
         }
 
         .player-container iframe {
@@ -78,31 +78,32 @@
 <body>
 
     <div class="container">
-        <h1>DJ台</h1>
+        <h1>🎵 我的迷你 DJ</h1>
         
         <div class="control-panel">
-            <input type="text" id="musicInput" placeholder="輸入想聽的歌名">
+            <input type="text" id="musicInput" placeholder="輸入歌名（例如：稻香）">
             <button id="playBtn">播放</button>
         </div>
 
         <div class="player-container">
-            <iframe id="ytPlayer" 
-                    src="https://www.youtube.com/embed?listType=search&list=lofi hip hop" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media" 
+            <!-- 一開始先空的，按播放才載入影片 -->
+            <iframe id="ytPlayer"
+                    src=""
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
                     allowfullscreen>
             </iframe>
         </div>
     </div>
 
-
     <script>
-       
         const inputField = document.getElementById('musicInput');
         const playButton = document.getElementById('playBtn');
         const playerFrame = document.getElementById('ytPlayer');
+
+        // ⭐⭐⭐ 這裡是你們的歌單：歌名 ➜ YouTube VIDEO_ID ⭐⭐⭐
         const songs = {
-    "菸癮": "PIWXhAvy7uU",
+           "菸癮": "PIWXhAvy7uU",
     "走建國路回家但後座少ㄌ泥": "edhd3aZotjQ",
     "閣愛妳一擺": "PJJhHihvDpo",
     "Not Playing": "PBgndpNStbcc",
@@ -114,26 +115,35 @@
     "luther": "XVveECQmiAk",
     "太陽與地球": "/i5YRIjxyJP8",
     "drunk": "4HLumkaPcCI"
-};
+        };
+
         function playMusic() {
-    const keyword = inputField.value.trim();
+            const keyword = inputField.value.trim();
 
-    if (keyword === "") {
-        alert("請先輸入歌名喔！");
-        return;
-    }
+            if (keyword === "") {
+                alert("請先輸入歌名喔！");
+                return;
+            }
 
-    const videoId = songs[keyword];
-    if (!videoId) {
-        alert("目前只支援：菸癮、走建國路回家但後座少ㄌ泥、閣愛妳一擺、Not Playing、愛妳是、我不是饒舌歌手、擋一根、Like Him、手卷烟、luther、太陽與地球、drunk 這幾首喔～");
-        return;
-    }
+            const videoId = songs[keyword];
 
-    const newUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-    playerFrame.src = newUrl;
-}
+            if (!videoId) {
+                alert("歌單暫時沒有這首歌～目前支援：\n" + Object.keys(songs).join("、"));
+                return;
+            }
 
+            const newUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+            playerFrame.src = newUrl;
+        }
 
+        playButton.addEventListener('click', playMusic);
+
+        inputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                playMusic();
+            }
+        });
     </script>
 </body>
 </html>
+
